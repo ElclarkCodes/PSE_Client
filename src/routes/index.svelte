@@ -229,9 +229,11 @@
 		{/each}
 
 		{#if notFound}
-			<center>
-				<p>Data Tidak Ditemukan!</p>
-			</center>
+			<article>
+				<center>
+					<p>Data Tidak Ditemukan!</p>
+				</center>
+			</article>
 		{/if}
 
 		{#if loading}
