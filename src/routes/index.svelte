@@ -75,7 +75,7 @@
 			noMoreData = true
 		}
 
-		if (search !== '' && list.length === 0) {
+		if (list.length === 0) {
 			notFound = true
 		}
 
