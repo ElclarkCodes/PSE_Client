@@ -68,7 +68,7 @@
 
 		// check if there is no more data by checking
 		// if the received data is less than the limit
-		if (list < limit) {
+		if (list.length < limit) {
 			noMoreData = true
 		}
 
