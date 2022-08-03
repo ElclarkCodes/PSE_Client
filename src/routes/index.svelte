@@ -17,6 +17,10 @@
 	let noMoreData = false
 	let lastSearch = ''
 
+	let error = false
+	let errorMessage = ''
+	let errorCode = ''
+
 	async function reloadData() {
 		// empty list
 		list = []
@@ -30,10 +34,28 @@
 		// set noMoreData
 		noMoreData = false
 
-		// get data
 		let response = await fetch(
 			`https://api.elclark.my.id/pse/${category}?search=${search}&limit=${limit}&offset=${offset}`
-		)
+		).catch((e) => {
+			error = true
+			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
+			errorCode = e.message
+
+			// set loading
+			loading = false
+		})
+
+		// if response is not ok
+		if (!response.ok) {
+			error = true
+			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
+			errorCode = response.statusText + ' (' + response.status + ')'
+
+			// set loading
+			loading = false
+		}
+
+		// get data
 		let data = await response.json()
 
 		// set list
@@ -57,7 +79,25 @@
 		// get data
 		let response = await fetch(
 			`https://api.elclark.my.id/pse/${category}?search=${search}&limit=${limit}&offset=${offset}`
-		)
+		).catch((e) => {
+			error = true
+			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
+			errorCode = e.message
+
+			// set loading
+			loadingMore = false
+		})
+
+		// if response is not ok
+		if (!response.ok) {
+			error = true
+			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
+			errorCode = response.statusText + ' (' + response.status + ')'
+
+			// set loading
+			loadingMore = false
+		}
+
 		let data = await response.json()
 
 		// check if there is no more data by checking
@@ -110,6 +150,12 @@
 		reloadData()
 	}
 
+	function closeError() {
+		error = false
+		errorMessage = ''
+		errorCode = ''
+	}
+
 	// function getDate(date) {
 	// 	return moment(date).locale('id').format('DD MMMM YYYY')
 	// }
@@ -132,7 +178,7 @@
 	</article>
 
 	<form on:submit|preventDefault={doSearch}>
-		<input type="text" name="search" placeholder="Cari" bind:value={search} />
+		<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
 		<select name="type" bind:value={category} on:change={reloadData}>
 			<option value="asing_terdaftar">Asing Terdaftar</option>
 			<option value="asing_dihentikan_sementara">Asing Dihentikan Sementara</option>
@@ -178,6 +224,24 @@
 				class="secondary"
 				on:scroll={loadMoreData}>Muat Lainnya</button
 			>
+		{/if}
+
+		{#if error}
+			<dialog open>
+				<article>
+					<header>
+						<span aria-label="Close" class="close" on:click={closeError} />
+						Terjadi Kesalahan!
+					</header>
+					<p>
+						{errorMessage}
+					</p>
+
+					<code>
+						{errorCode}
+					</code>
+				</article>
+			</dialog>
 		{/if}
 	</div>
 
