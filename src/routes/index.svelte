@@ -21,6 +21,8 @@
 	let errorMessage = ''
 	let errorCode = ''
 
+	let notFound = false
+
 	async function reloadData() {
 		// empty list
 		list = []
@@ -33,6 +35,9 @@
 
 		// set noMoreData
 		noMoreData = false
+
+		// set NotFound
+		notFound = false
 
 		let response = await fetch(
 			`https://api.elclark.my.id/pse/${category}?search=${search}&limit=${limit}&offset=${offset}`
@@ -60,6 +65,10 @@
 
 		// set list
 		list = [...data]
+
+		if (search !== '' && list.length === 0) {
+			notFound = true
+		}
 
 		// set loading
 		loading = false
@@ -213,6 +222,12 @@
 			</article>
 		{/each}
 
+		{#if notFound}
+			<center>
+				<p>Data Tidak Ditemukan!</p>
+			</center>
+		{/if}
+
 		{#if loading}
 			<div aria-busy="true" />
 		{/if}
@@ -225,25 +240,25 @@
 				on:scroll={loadMoreData}>Muat Lainnya</button
 			>
 		{/if}
-
-		{#if error}
-			<dialog open>
-				<article>
-					<header>
-						<span aria-label="Close" class="close" on:click={closeError} />
-						Terjadi Kesalahan!
-					</header>
-					<p>
-						{errorMessage}
-					</p>
-
-					<code>
-						{errorCode}
-					</code>
-				</article>
-			</dialog>
-		{/if}
 	</div>
+
+	{#if error}
+		<dialog open>
+			<article>
+				<header>
+					<span aria-label="Close" class="close" on:click={closeError} />
+					Terjadi Kesalahan!
+				</header>
+				<p>
+					{errorMessage}
+				</p>
+
+				<code>
+					{errorCode}
+				</code>
+			</article>
+		</dialog>
+	{/if}
 
 	<footer class="made">
 		<center
