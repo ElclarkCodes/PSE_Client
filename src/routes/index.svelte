@@ -178,7 +178,9 @@
 
 <div>
 	<header>
-		<h1>Check PSE</h1>
+		<a href="/">
+			<h1>Check PSE</h1>
+		</a>
 	</header>
 
 	<article>
