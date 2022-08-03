@@ -225,14 +225,14 @@
 		</noscript>
 		{#each list as item}
 			<article in:fade class={getColor(item.status_id)}>
-				<h2 data-tooltip={item.status_id}>{item.nama}</h2>
+				<h2>{item.nama}</h2>
 				{#if fixURL(item.website)}
 					<a href={fixURL(item.website)}>{fixURL(item.website)}</a>
 				{/if}
 				<p>{item.nama_perusahaan}</p>
 				<!-- <p>
-						{getDate(item.attributes.tanggal_daftar)}
-					</p> -->
+					{getDate(item.attributes.tanggal_daftar)}
+				</p> -->
 				<p>{item.sektor}</p>
 			</article>
 		{/each}
