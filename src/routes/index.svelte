@@ -66,6 +66,12 @@
 		// set list
 		list = [...data]
 
+		// check if there is no more data by checking
+		// if the received data is less than the limit
+		if (list < limit) {
+			noMoreData = true
+		}
+
 		if (search !== '' && list.length === 0) {
 			notFound = true
 		}
