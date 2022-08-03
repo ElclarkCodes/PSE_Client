@@ -6,7 +6,8 @@
 	// import moment from 'moment'
 
 	let list = []
-	let category = 'asing_terdaftar'
+	let category = 'asing'
+	let status = 'terdaftar'
 	let search = ''
 	let limit = 10
 	let offset = 0
@@ -40,7 +41,9 @@
 		notFound = false
 
 		let response = await fetch(
-			`https://api.elclark.my.id/pse/${category}?search=${search}&limit=${limit}&offset=${offset}`
+			`https://api.elclark.my.id/pse/${
+				category + '_' + status
+			}?search=${search}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
@@ -93,7 +96,9 @@
 
 		// get data
 		let response = await fetch(
-			`https://api.elclark.my.id/pse/${category}?search=${search}&limit=${limit}&offset=${offset}`
+			`https://api.elclark.my.id/pse/${
+				category + '_' + status
+			}?search=${search}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
@@ -196,13 +201,14 @@
 
 	<form on:submit|preventDefault={doSearch}>
 		<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
-		<select name="type" bind:value={category} on:change={reloadData}>
-			<option value="asing_terdaftar">Asing Terdaftar</option>
-			<option value="asing_dihentikan_sementara">Asing Dihentikan Sementara</option>
-			<option value="asing_dicabut">Asing Dicabut</option>
-			<option value="lokal_terdaftar">Lokal Terdaftar</option>
-			<option value="lokal_dihentikan_sementara">Lokal Dihentikan Sementara</option>
-			<option value="lokal_dicabut">Lokal Dicabut</option>
+		<select name="category" bind:value={category} on:change={reloadData}>
+			<option value="asing">Asing</option>
+			<option value="lokal">Domestik</option>
+		</select>
+		<select name="status" bind:value={status} on:change={reloadData}>
+			<option value="terdaftar">Terdaftar</option>
+			<option value="dihentikan_sementara">Dihentikan Sementara</option>
+			<option value="dicabut">Dicabut</option>
 		</select>
 		<button>Cari</button>
 	</form>
