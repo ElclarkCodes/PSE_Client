@@ -178,7 +178,7 @@
 
 	function getColor(status) {
 		if (status === 'TERDAFTAR') {
-			return 'terdaftar'
+			return ''
 		}
 
 		if (status === 'DICABUT') {
@@ -326,10 +326,6 @@
 
 	.made {
 		padding: 1rem;
-	}
-
-	:global(.terdaftar) {
-		border: 1px solid #43a047;
 	}
 
 	:global(.dihentikan_sementara) {
