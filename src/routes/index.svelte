@@ -224,8 +224,8 @@
 			</div>
 		</noscript>
 		{#each list as item}
-			<article in:fade class={getColor(item.status_id)} data-tooltip={item.status_id}>
-				<h2>{item.nama}</h2>
+			<article in:fade class={getColor(item.status_id)}>
+				<h2 data-tooltip={item.status_id}>{item.nama}</h2>
 				{#if fixURL(item.website)}
 					<a href={fixURL(item.website)}>{fixURL(item.website)}</a>
 				{/if}
