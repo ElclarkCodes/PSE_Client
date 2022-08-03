@@ -176,6 +176,18 @@
 		errorCode = ''
 	}
 
+	function getColor(status) {
+		if (status === 'TERDAFTAR') {
+			return 'terdaftar'
+		}
+
+		if (status === 'DICABUT') {
+			return 'dicabut'
+		}
+
+		return 'dihentikan_sementara'
+	}
+
 	// function getDate(date) {
 	// 	return moment(date).locale('id').format('DD MMMM YYYY')
 	// }
@@ -212,7 +224,7 @@
 			</div>
 		</noscript>
 		{#each list as item}
-			<article in:fade>
+			<article in:fade class={getColor(item.status_id)}>
 				<h2>{item.nama}</h2>
 				{#if fixURL(item.website)}
 					<a href={fixURL(item.website)}>{fixURL(item.website)}</a>
@@ -314,5 +326,17 @@
 
 	.made {
 		padding: 1rem;
+	}
+
+	:global(.terdaftar) {
+		border: 1px solid #43a047;
+	}
+
+	:global(.dihentikan_sementara) {
+		border: 1px solid #fb8c00;
+	}
+
+	:global(.dicabut) {
+		border: 1px solid #e53935;
 	}
 </style>
