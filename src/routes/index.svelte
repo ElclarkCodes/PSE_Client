@@ -155,15 +155,15 @@
 		</noscript>
 		{#each list as item}
 			<article in:fade>
-				<h2>{item.attributes.nama}</h2>
-				{#if fixURL(item.attributes.website)}
-					<a href={fixURL(item.attributes.website)}>{fixURL(item.attributes.website)}</a>
+				<h2>{item.nama}</h2>
+				{#if fixURL(item.website)}
+					<a href={fixURL(item.website)}>{fixURL(item.website)}</a>
 				{/if}
-				<p>{item.attributes.nama_perusahaan}</p>
+				<p>{item.nama_perusahaan}</p>
 				<!-- <p>
 						{getDate(item.attributes.tanggal_daftar)}
 					</p> -->
-				<p>{item.attributes.sektor}</p>
+				<p>{item.sektor}</p>
 			</article>
 		{/each}
 
