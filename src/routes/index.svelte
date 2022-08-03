@@ -188,17 +188,6 @@
 		</a>
 	</header>
 
-	<article>
-		<header><h4>PERINGATAN!</h4></header>
-		<p>
-			Ini <strong>bukan</strong> website resmi <strong>Kominfo</strong>. dan kami
-			<strong>tidak</strong>
-			memiliki hubungan apapun dengan <strong>Kominfo</strong>. untuk informasi lebih lanjut tentang
-			<strong>Penyelenggara Sistem Elektronik</strong> silahkan kunjungi website resmi
-			<a href="https://pse.kominfo.go.id"><strong>Kominfo</strong></a>.
-		</p>
-	</article>
-
 	<form on:submit|preventDefault={doSearch}>
 		<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
 		<select name="category" bind:value={category} on:change={reloadData}>
@@ -275,6 +264,17 @@
 			</article>
 		</dialog>
 	{/if}
+
+	<article>
+		<header><h4>PERINGATAN!</h4></header>
+		<p>
+			Ini <strong>bukan</strong> website resmi <strong>Kominfo</strong>. dan kami
+			<strong>tidak</strong>
+			memiliki hubungan apapun dengan <strong>Kominfo</strong>. untuk informasi lebih lanjut tentang
+			<strong>Penyelenggara Sistem Elektronik</strong> silahkan kunjungi website resmi
+			<a href="https://pse.kominfo.go.id"><strong>Kominfo</strong></a>.
+		</p>
+	</article>
 
 	<footer class="made">
 		<center
