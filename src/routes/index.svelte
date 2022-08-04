@@ -1,16 +1,15 @@
 <script context="module">
-	export async function load({ fetch, url }) {
+	export async function load({ url, fetch }) {
 		const searchParams = url.searchParams
 
 		const search = searchParams.get('serach') || ''
 		const category = searchParams.get('category') || ''
 		const status = searchParams.get('status') || ''
-		const limit = searchParams.get('limit') || ''
-		const offset = searchParams.get('offset') || ''
+		const limit = searchParams.get('limit') || 10
+		const offset = searchParams.get('offset') || 0
 
-		const response = await fetch(
-			`https://api.elclark.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
-		)
+		let api = `https://api.elclark.my.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+		const response = await fetch(api)
 
 		if (!response.ok) {
 			return {
