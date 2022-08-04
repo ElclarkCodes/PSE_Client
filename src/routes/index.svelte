@@ -39,9 +39,7 @@
 		notFound = false
 
 		let response = await fetch(
-			`https://api.elclark.my.id/pse/${
-				category + '_' + status
-			}?search=${search}&limit=${limit}&offset=${offset}`
+			`https://api.elclark.my.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
@@ -94,9 +92,7 @@
 
 		// get data
 		let response = await fetch(
-			`https://api.elclark.my.id/pse/${
-				category + '_' + status
-			}?search=${search}&limit=${limit}&offset=${offset}`
+			`https://api.elclark.my.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
@@ -187,7 +183,8 @@
 	}
 
 	// function getDate(date) {
-	// 	return moment(date).locale('id').format('DD MMMM YYYY')
+	// 	const format = 'DD, MMMM YYYY'
+	// 	return moment(date).format(format)
 	// }
 </script>
 
@@ -201,10 +198,12 @@
 	<form on:submit|preventDefault={doSearch}>
 		<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
 		<select name="category" bind:value={category} on:change={reloadData}>
+			<option value="">Asing & Domestik</option>
 			<option value="asing">Asing</option>
 			<option value="lokal">Domestik</option>
 		</select>
 		<select name="status" bind:value={status} on:change={reloadData}>
+			<option value="">Semua</option>
 			<option value="terdaftar">Terdaftar</option>
 			<option value="dihentikan_sementara">Dihentikan Sementara</option>
 			<option value="dicabut">Dicabut</option>
@@ -229,7 +228,7 @@
 				{/if}
 				<p>{item.nama_perusahaan}</p>
 				<!-- <p>
-					{getDate(item.attributes.tanggal_daftar)}
+					{getDate(item.tanggal_daftar)}
 				</p> -->
 				<p>{item.sektor}</p>
 			</article>
