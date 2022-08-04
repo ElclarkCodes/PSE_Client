@@ -1,12 +1,12 @@
 <script context="module">
-	export async function load({ url, fetch }) {
-		const searchParams = url.searchParams
+	export async function load({ fetch, url }) {
+		const params = await url.searchParams
 
-		const search = searchParams.get('serach') || ''
-		const category = searchParams.get('category') || ''
-		const status = searchParams.get('status') || ''
-		const limit = searchParams.get('limit') || 10
-		const offset = searchParams.get('offset') || 0
+		let search = (await params.get('search')) || ''
+		let category = (await params.get('category')) || ''
+		let status = (await params.get('status')) || ''
+		let limit = (await params.get('limit')) || 10
+		let offset = (await params.get('offset')) || 0
 
 		let api = `https://api.elclark.my.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		const response = await fetch(api)
@@ -27,7 +27,12 @@
 
 		return {
 			props: {
-				list
+				list,
+				search,
+				category,
+				status,
+				limit,
+				offset
 			}
 		}
 	}
@@ -40,13 +45,13 @@
 
 	export let list = []
 
-	let category = ''
-	let status = ''
-	let search = ''
-	let limit = 10
-	let offset = 0
+	export let search = ''
+	export let category = ''
+	export let status = ''
+	export let limit = 10
+	export let offset = 0
 
-	let loading = true
+	let loading = false
 	let loadingMore = false
 
 	let noMoreData = false
@@ -234,12 +239,12 @@
 	<form on:submit|preventDefault={doSearch}>
 		<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
 		<select name="category" bind:value={category} on:change={reloadData}>
-			<option value="">Asing & Domestik</option>
+			<option value="">Semua (Asing dan Domestik)</option>
 			<option value="asing">Asing</option>
 			<option value="lokal">Domestik</option>
 		</select>
 		<select name="status" bind:value={status} on:change={reloadData}>
-			<option value="">Semua</option>
+			<option value="">Semua (Terdaftar, Dihentikan Sementara dan dicabut)</option>
 			<option value="terdaftar">Terdaftar</option>
 			<option value="dihentikan_sementara">Dihentikan Sementara</option>
 			<option value="dicabut">Dicabut</option>
@@ -248,14 +253,14 @@
 	</form>
 
 	<div class="list">
-		<noscript>
-			<div>
+		<!-- <noscript>
+			<article>
 				<p>
-					<b>Peringatan:</b> Sistem tidak mendukung JavaScript. Silahkan aktifkan JavaScript untuk menggunakan
-					Aplikasi ini!
+					<b>Peringatan:</b> JavaScript tidak didukung atau tidak aktif. Mohon aktifkan JavaScript untuk
+					mengaktifkan semua fitur.
 				</p>
-			</div>
-		</noscript>
+			</article>
+		</noscript> -->
 		{#each list as item}
 			<article in:fade class={getColor(item.status_id)}>
 				<h2>{item.nama}</h2>
@@ -289,6 +294,15 @@
 				class="secondary"
 				on:scroll={loadMoreData}>Muat Lainnya</button
 			>
+
+			<noscript>
+				<article>
+					<p>
+						Mohon maaf! fitur ini tidak didukung di browser ini. silahkan gunakan browser yang
+						mendukung javascript.
+					</p>
+				</article>
+			</noscript>
 		{/if}
 	</div>
 
