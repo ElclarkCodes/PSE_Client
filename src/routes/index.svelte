@@ -118,9 +118,6 @@
 		loading = false
 	}
 
-	// load data
-	// reloadData()
-
 	// load more data
 	async function loadMoreData() {
 		// set loading
@@ -220,11 +217,6 @@
 
 		return 'dihentikan_sementara'
 	}
-
-	// function getDate(date) {
-	// 	const format = 'DD, MMMM YYYY'
-	// 	return moment(date).format(format)
-	// }
 </script>
 
 <div>
@@ -252,19 +244,11 @@
 				<option value="dihentikan_sementara">Dihentikan Sementara</option>
 				<option value="dicabut">Dicabut</option>
 			</select>
-			<button>Cari</button>
+			<button type="submit">Cari</button>
 		</form>
 	</article>
 
 	<div class="list">
-		<!-- <noscript>
-			<article>
-				<p>
-					<b>Peringatan:</b> JavaScript tidak didukung atau tidak aktif. Mohon aktifkan JavaScript untuk
-					mengaktifkan semua fitur.
-				</p>
-			</article>
-		</noscript> -->
 		{#each list as item}
 			<article in:fade class={getColor(item.status_id)}>
 				<h2>{item.nama}</h2>
@@ -272,9 +256,6 @@
 					<a href={fixURL(item.website)}>{fixURL(item.website)}</a>
 				{/if}
 				<p>{item.nama_perusahaan}</p>
-				<!-- <p>
-					{getDate(item.tanggal_daftar)}
-				</p> -->
 				<p>{item.sektor}</p>
 			</article>
 		{/each}
@@ -293,9 +274,10 @@
 
 		{#if !loading && list.length > 0 && !noMoreData}
 			<button
+				type="button"
+				class="secondary"
 				aria-busy={loadingMore}
 				on:click={loadMoreData}
-				class="secondary"
 				on:scroll={loadMoreData}>Muat Lainnya</button
 			>
 
