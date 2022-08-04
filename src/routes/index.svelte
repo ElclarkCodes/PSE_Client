@@ -1,6 +1,4 @@
 <script context="module">
-	// SvelteKit Load
-
 	export async function load({ fetch, url }) {
 		const searchParams = url.searchParams
 
@@ -12,20 +10,7 @@
 
 		const api = 'https://api.elclark.id/pse'
 		const response = await fetch(
-			`${api}?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`,
-			{
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({
-					search,
-					category,
-					status,
-					limit,
-					offset
-				})
-			}
+			`${api}?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		)
 
 		return {
@@ -117,6 +102,9 @@
 		// set loading
 		loading = false
 	}
+
+	// load data
+	// reloadData()
 
 	// load more data
 	async function loadMoreData() {
