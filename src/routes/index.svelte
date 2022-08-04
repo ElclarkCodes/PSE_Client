@@ -4,8 +4,8 @@
 	// import moment from 'moment'
 
 	let list = []
-	let category = 'asing'
-	let status = 'terdaftar'
+	let category = ''
+	let status = ''
 	let search = ''
 	let limit = 10
 	let offset = 0
@@ -198,12 +198,12 @@
 	<form on:submit|preventDefault={doSearch}>
 		<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
 		<select name="category" bind:value={category} on:change={reloadData}>
-			<option value="" default>Asing & Domestik</option>
+			<option value="">Asing & Domestik</option>
 			<option value="asing">Asing</option>
 			<option value="lokal">Domestik</option>
 		</select>
 		<select name="status" bind:value={status} on:change={reloadData}>
-			<option value="" default>Semua</option>
+			<option value="">Semua</option>
 			<option value="terdaftar">Terdaftar</option>
 			<option value="dihentikan_sementara">Dihentikan Sementara</option>
 			<option value="dicabut">Dicabut</option>
