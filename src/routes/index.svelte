@@ -40,7 +40,6 @@
 
 <script>
 	import { fade } from 'svelte/transition'
-	// import moment from 'moment'
 
 	export let list = []
 
