@@ -1,9 +1,48 @@
+<script context="module">
+	// SvelteKit Load
+
+	export async function load({ fetch, url }) {
+		const searchParams = url.searchParams
+
+		const search = searchParams.get('serach')
+		const category = searchParams.get('category')
+		const status = searchParams.get('status')
+		const limit = searchParams.get('limit')
+		const offset = searchParams.get('offset')
+
+		const api = 'https://api.elclark.id/pse'
+		const response = await fetch(
+			`${api}?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					search,
+					category,
+					status,
+					limit,
+					offset
+				})
+			}
+		)
+
+		return {
+			props: {
+				list: (await response.json()) || []
+			}
+		}
+	}
+</script>
+
 <script>
 	import '@picocss/pico/css/pico.min.css'
 	import { fade } from 'svelte/transition'
 	// import moment from 'moment'
 
-	let list = []
+	export let list = []
+
 	let category = ''
 	let status = ''
 	let search = ''
