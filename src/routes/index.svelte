@@ -14,15 +14,13 @@
 
 		if (!response.ok) {
 			return {
-				status: response.status,
-				statusText: response.statusText
+				status: response.status
 			}
 		}
 
 		if (response.headers.get('Content-Type') !== 'application/json') {
 			return {
-				status: response.status,
-				statusText: response.statusText
+				status: response.status
 			}
 		}
 
