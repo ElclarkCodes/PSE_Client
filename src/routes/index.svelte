@@ -235,21 +235,29 @@
 		</a>
 	</header>
 
-	<form on:submit|preventDefault={doSearch}>
-		<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
-		<select name="category" bind:value={category} on:change={reloadData}>
-			<option value="">Semua (Asing dan Domestik)</option>
-			<option value="asing">Asing</option>
-			<option value="lokal">Domestik</option>
-		</select>
-		<select name="status" bind:value={status} on:change={reloadData}>
-			<option value="">Semua (Terdaftar, Dihentikan Sementara dan dicabut)</option>
-			<option value="terdaftar">Terdaftar</option>
-			<option value="dihentikan_sementara">Dihentikan Sementara</option>
-			<option value="dicabut">Dicabut</option>
-		</select>
-		<button>Cari</button>
-	</form>
+	<article>
+		<form on:submit|preventDefault={doSearch}>
+			<input
+				type="text"
+				name="search"
+				placeholder="Cari"
+				on:change={doSearch}
+				bind:value={search}
+			/>
+			<select name="category" bind:value={category} on:change={reloadData}>
+				<option value="">Semua (Asing dan Domestik)</option>
+				<option value="asing">Asing</option>
+				<option value="lokal">Domestik</option>
+			</select>
+			<select name="status" bind:value={status} on:change={reloadData}>
+				<option value="">Semua (Terdaftar, Dihentikan Sementara dan dicabut)</option>
+				<option value="terdaftar">Terdaftar</option>
+				<option value="dihentikan_sementara">Dihentikan Sementara</option>
+				<option value="dicabut">Dicabut</option>
+			</select>
+			<button>Cari</button>
+		</form>
+	</article>
 
 	<div class="list">
 		<!-- <noscript>
