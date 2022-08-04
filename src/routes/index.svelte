@@ -8,14 +8,29 @@
 		const limit = searchParams.get('limit')
 		const offset = searchParams.get('offset')
 
-		const api = 'https://api.elclark.id/pse'
 		const response = await fetch(
-			`${api}?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+			`https://api.elclark.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		)
+
+		if (!response.ok) {
+			return {
+				status: response.status,
+				statusText: response.statusText
+			}
+		}
+
+		if (response.headers.get('Content-Type') !== 'application/json') {
+			return {
+				status: response.status,
+				statusText: response.statusText
+			}
+		}
+
+		const list = await response.json()
 
 		return {
 			props: {
-				list: (await response.json()) || []
+				list
 			}
 		}
 	}
