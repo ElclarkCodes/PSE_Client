@@ -39,7 +39,6 @@
 </script>
 
 <script>
-	import '@picocss/pico/css/pico.min.css'
 	import { fade } from 'svelte/transition'
 	// import moment from 'moment'
 

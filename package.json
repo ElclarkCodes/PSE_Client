@@ -19,7 +19,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@picocss/pico": "^1.5.3",
 		"moment": "^2.29.4"
 	}
 }
