@@ -118,9 +118,6 @@
 		loading = false
 	}
 
-	// load data
-	reloadData()
-
 	// load more data
 	async function loadMoreData() {
 		// set loading
