@@ -2,11 +2,11 @@
 	export async function load({ fetch, url }) {
 		const searchParams = url.searchParams
 
-		const search = searchParams.get('serach')
-		const category = searchParams.get('category')
-		const status = searchParams.get('status')
-		const limit = searchParams.get('limit')
-		const offset = searchParams.get('offset')
+		const search = searchParams.get('serach') || ''
+		const category = searchParams.get('category') || ''
+		const status = searchParams.get('status') || ''
+		const limit = searchParams.get('limit') || ''
+		const offset = searchParams.get('offset') || ''
 
 		const response = await fetch(
 			`https://api.elclark.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
