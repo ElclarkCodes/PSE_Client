@@ -229,13 +229,11 @@
 </script>
 
 <div>
-	<header>
+	<article>
 		<a href="/">
 			<h1>Check PSE</h1>
 		</a>
-	</header>
 
-	<article>
 		<form on:submit|preventDefault={doSearch}>
 			<input
 				type="text"
@@ -355,8 +353,8 @@
 	h1 {
 		text-align: center;
 
-		margin-top: 1rem;
-		margin-bottom: 2rem;
+		margin-top: 0;
+		margin-bottom: 1.5rem;
 	}
 
 	article h4 {
