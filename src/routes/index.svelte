@@ -8,7 +8,7 @@
 		let limit = (await params.get('limit')) || 10
 		let offset = (await params.get('offset')) || 0
 
-		let api = `https://api.elclark.my.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+		let api = `https://api.elclark.my.id/v2/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		const response = await fetch(api)
 
 		if (!response.ok) {
@@ -78,7 +78,7 @@
 		notFound = false
 
 		let response = await fetch(
-			`https://api.elclark.my.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+			`https://api.elclark.my.id/v2/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
@@ -128,7 +128,7 @@
 
 		// get data
 		let response = await fetch(
-			`https://api.elclark.my.id/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+			`https://api.elclark.my.id/v2/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
