@@ -251,12 +251,20 @@
 	<div class="list">
 		{#each list as item}
 			<article in:fade class={getColor(item.status_id)}>
-				<h2>{item.nama}</h2>
+				<header>
+					<h2>
+						{item.nama}
+					</h2>
+				</header>
+
 				{#if fixURL(item.website)}
 					<a href={fixURL(item.website)}>{fixURL(item.website)}</a>
 				{/if}
-				<p>{item.nama_perusahaan}</p>
-				<p>{item.sektor}</p>
+
+				<p>
+					{item.nama_perusahaan} <br />
+					{item.sektor}
+				</p>
 			</article>
 		{/each}
 
@@ -290,6 +298,10 @@
 				</article>
 			</noscript>
 		{/if}
+
+		<a href="#top">
+			<center>Kembali Ke Atas</center>
+		</a>
 	</div>
 
 	{#if error}
@@ -338,14 +350,14 @@
 		margin-bottom: 1.5rem;
 	}
 
-	article h4 {
-		margin: 0;
-	}
-
-	article h2 {
+	h2 {
 		font-size: 1.5rem;
 		font-weight: bold;
 		margin-bottom: 0.1rem;
+	}
+
+	h4 {
+		margin: 0;
 	}
 
 	article p {
@@ -358,7 +370,7 @@
 	}
 
 	.made {
-		padding: 1rem;
+		padding-bottom: 1rem;
 	}
 
 	:global(.dihentikan_sementara) {
