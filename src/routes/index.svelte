@@ -1,4 +1,6 @@
 <script context="module">
+	const API_URI = 'https://api.elclark.my.id/v2/pse'
+
 	export async function load({ fetch, url }) {
 		const params = await url.searchParams
 
@@ -8,8 +10,9 @@
 		let limit = (await params.get('limit')) || 10
 		let offset = (await params.get('offset')) || 0
 
-		let api = `https://api.elclark.my.id/v2/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
-		const response = await fetch(api)
+		const response = await fetch(
+			`${API_URI}?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+		)
 
 		if (!response.ok) {
 			return {
@@ -27,12 +30,13 @@
 
 		return {
 			props: {
+				API_URI,
 				list,
 				search,
 				category,
 				status,
 				limit,
-				offset,
+				offset
 			}
 		}
 	}
@@ -48,6 +52,7 @@
 	dayjs.extend(relativeTime)
 	dayjs.locale('id')
 
+	export let API_URI = 'https://api.elclark.my.id/v2/pse'
 	export let list = []
 
 	export let search = ''
@@ -72,13 +77,15 @@
 	let lastUpdatedDate = dayjs(1660035172175).format('DD MMMM YYYY HH:mm')
 	let lastUpdatedUTC = dayjs(1660035172175).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
 
-	let timezone = new Date().toLocaleTimeString('en-us',{timeZoneName:'short'}).split(' ')[2]
+	let timezone = new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2]
 
-	fetch('https://api.elclark.my.id/v2/pse/updated').then(res => res.text()).then(res => {
-		lastUpdated = dayjs(Number(res)).fromNow()
-		lastUpdatedDate = dayjs(Number(res)).format('DD MMMM YYYY HH:mm')
-		lastUpdatedUTC = dayjs(Number(res)).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
-	})
+	fetch(`${API_URI}/updated`)
+		.then((res) => res.text())
+		.then((res) => {
+			lastUpdated = dayjs(Number(res)).fromNow()
+			lastUpdatedDate = dayjs(Number(res)).format('DD MMMM YYYY HH:mm')
+			lastUpdatedUTC = dayjs(Number(res)).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+		})
 
 	async function reloadData() {
 		// empty list
@@ -97,7 +104,7 @@
 		notFound = false
 
 		let response = await fetch(
-			`https://api.elclark.my.id/v2/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+			`${API_URI}?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
@@ -147,7 +154,7 @@
 
 		// get data
 		let response = await fetch(
-			`https://api.elclark.my.id/v2/pse?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
+			`${API_URI}?search=${search}&category=${category}&status=${status}&limit=${limit}&offset=${offset}`
 		).catch((e) => {
 			error = true
 			errorMessage = 'Ada kesalahan saat memuat data, silahkan coba lagi!'
@@ -187,7 +194,7 @@
 		try {
 			new URL(url)
 			return true
-		} catch (_) {
+		} catch (error) {
 			return false
 		}
 	}
@@ -241,17 +248,13 @@
 <div>
 	<article>
 		<a href="/">
-			<h1>Check PSE</h1>
+			<center>
+				<h1>Check PSE</h1>
+			</center>
 		</a>
 
 		<form on:submit|preventDefault={doSearch}>
-			<input
-				type="text"
-				name="search"
-				placeholder="Cari"
-				on:change={doSearch}
-				bind:value={search}
-			/>
+			<input type="text" name="search" placeholder="Cari" on:change={doSearch} bind:value={search} />
 			<select name="category" bind:value={category} on:change={reloadData}>
 				<option value="">Semua (Asing dan Domestik)</option>
 				<option value="asing">Asing</option>
@@ -266,12 +269,16 @@
 			<button type="submit">Cari</button>
 		</form>
 
-		<center><p>Diperbarui <time datetime={lastUpdatedUTC} data-tooltip={`${lastUpdatedDate} ${timezone}`}>{lastUpdated}</time></p></center>
+		<center
+			><p>
+				Diperbarui <time datetime={lastUpdatedUTC} data-tooltip={`${lastUpdatedDate} ${timezone}`}>{lastUpdated}</time>
+			</p></center
+		>
 	</article>
 
 	<div class="list">
 		{#each list as item}
-			<article in:fade class={getColor(item.status_id)}>
+			<article id={item.id} in:fade class={getColor(item.status_id)}>
 				<header>
 					<h2>
 						{item.nama}
@@ -292,7 +299,7 @@
 		{#if notFound}
 			<article>
 				<center>
-					<p>Data Tidak Ditemukan!</p>
+					<p><strong>{lastSearch}</strong> Tidak Ditemukan!</p>
 				</center>
 			</article>
 		{/if}
@@ -302,19 +309,14 @@
 		{/if}
 
 		{#if !loading && list.length > 0 && !noMoreData}
-			<button
-				type="button"
-				class="secondary"
-				aria-busy={loadingMore}
-				on:click={loadMoreData}
-				on:scroll={loadMoreData}>Muat Lainnya</button
+			<button type="button" class="secondary" aria-busy={loadingMore} on:click={loadMoreData} on:scroll={loadMoreData}
+				>Muat Lainnya</button
 			>
 
 			<noscript>
 				<article>
 					<p>
-						Mohon maaf! fitur ini tidak didukung di browser ini. silahkan gunakan browser yang
-						mendukung javascript.
+						Mohon maaf! fitur ini tidak didukung di browser ini. silahkan gunakan browser yang mendukung javascript.
 					</p>
 				</article>
 			</noscript>
@@ -325,23 +327,21 @@
 		</a>
 	</div>
 
-	{#if error}
-		<dialog open>
-			<article>
-				<header>
-					<span aria-label="Close" class="close" on:click={closeError} />
-					Terjadi Kesalahan!
-				</header>
-				<p>
-					{errorMessage}
-				</p>
+	<dialog open={error}>
+		<article>
+			<header>
+				<span aria-label="Close" class="close" on:click={closeError} />
+				Terjadi Kesalahan!
+			</header>
+			<p>
+				{errorMessage}
+			</p>
 
-				<code>
-					{errorCode}
-				</code>
-			</article>
-		</dialog>
-	{/if}
+			<code>
+				{errorCode}
+			</code>
+		</article>
+	</dialog>
 
 	<article>
 		<header><h4>PERINGATAN!</h4></header>
@@ -355,18 +355,12 @@
 	</article>
 
 	<footer class="made">
-		<center
-			><strong
-				>Made With Love By <a href="https://elclark.my.id/profiles/elclark">Elclark</a></strong
-			>
-		</center>
+		<center><strong>Made With Love By <a href="https://elclark.my.id/profiles/elclark">Elclark</a></strong> </center>
 	</footer>
 </div>
 
 <style>
 	h1 {
-		text-align: center;
-
 		margin-top: 0;
 		margin-bottom: 1.5rem;
 	}
