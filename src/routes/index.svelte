@@ -73,9 +73,9 @@
 
 	let notFound = false
 
-	let lastUpdated = dayjs(1660035172175).fromNow()
-	let lastUpdatedDate = dayjs(1660035172175).format('DD MMMM YYYY HH:mm')
-	let lastUpdatedUTC = dayjs(1660035172175).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+	let lastUpdated
+	let lastUpdatedDate
+	let lastUpdatedUTC
 
 	let timezone = new Date().toLocaleTimeString('en-us', { timeZoneName: 'short' }).split(' ')[2]
 
@@ -269,11 +269,14 @@
 			<button type="submit">Cari</button>
 		</form>
 
-		<center
-			><p>
-				Diperbarui <time datetime={lastUpdatedUTC} data-tooltip={`${lastUpdatedDate} ${timezone}`}>{lastUpdated}</time>
-			</p></center
-		>
+		{#if lastUpdated}
+			<center in:fade>
+				<p>
+					Diperbarui <time datetime={lastUpdatedUTC} data-tooltip={`${lastUpdatedDate} ${timezone}`}>{lastUpdated}</time
+					>
+				</p>
+			</center>
+		{/if}
 	</article>
 
 	<div class="list">
