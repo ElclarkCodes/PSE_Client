@@ -174,7 +174,7 @@
 	}
 
 	function fixURL(url) {
-		if (url === '' || url === '-') {
+		if (!url || url === '' || url === '-') {
 			return false
 		}
 
