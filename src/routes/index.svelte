@@ -32,7 +32,7 @@
 				category,
 				status,
 				limit,
-				offset
+				offset,
 			}
 		}
 	}
@@ -40,6 +40,13 @@
 
 <script>
 	import { fade } from 'svelte/transition'
+
+	import dayjs from 'dayjs'
+	import relativeTime from 'dayjs/plugin/relativeTime'
+	import 'dayjs/locale/id'
+
+	dayjs.extend(relativeTime)
+	dayjs.locale('id')
 
 	export let list = []
 
@@ -60,6 +67,16 @@
 	let errorCode = ''
 
 	let notFound = false
+
+	let lastUpdated = dayjs(1660035172175).fromNow()
+	let lastUpdatedDate = dayjs(1660035172175).format('DD MMMM YYYY HH:mm')
+	let lastUpdatedUTC = dayjs(1660035172175).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+
+	fetch('https://api.elclark.my.id/v2/pse/updated').then(res => res.text()).then(res => {
+		lastUpdated = dayjs(Number(res)).fromNow()
+		lastUpdatedDate = dayjs(Number(res)).format('DD MMMM YYYY HH:mm')
+		lastUpdatedUTC = dayjs(Number(res)).format('YYYY-MM-DDTHH:mm:ss.SSS[Z]')
+	})
 
 	async function reloadData() {
 		// empty list
@@ -246,6 +263,8 @@
 			</select>
 			<button type="submit">Cari</button>
 		</form>
+
+		<center><p>Diperbarui <time datetime={lastUpdatedUTC} data-tooltip={lastUpdatedDate}>{lastUpdated}</time></p></center>
 	</article>
 
 	<div class="list">
